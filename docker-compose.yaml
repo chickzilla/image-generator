@@ -1,15 +1,14 @@
 services:
   db:
-    image: postgres:16
-    container_name: image-gen-db
+    image: postgres:latest
     environment:
-      POSTGRES_DB: image_gen_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-    volumes:
-      - postgres:/var/lib/postgresql/data/
     ports:
-      - "5432:5432"
+      - "5431:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres:
+  postgres_data:
