@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { PromptFormItem } from "./promptFormItem";
 import generate from "@/services/generate";
-import { ca } from "zod/v4/locales";
+import { useState } from "react";
+import { toast } from "../ui/use-toast";
 
 const promptSchema = z.object({
   prompt: z.string().min(1, { message: "Image Prompt is required" }),
@@ -16,6 +17,8 @@ const promptSchema = z.object({
 });
 
 export function PromptFormContent() {
+  const [isFetching, setIsFetching] = useState(false);
+
   const form = useForm<z.infer<typeof promptSchema>>({
     resolver: zodResolver(promptSchema),
     defaultValues: {
@@ -27,15 +30,31 @@ export function PromptFormContent() {
   async function onSubmit(values: z.infer<typeof promptSchema>) {
     try {
       const { prompt, negativePrompt } = values;
+      setIsFetching(true);
+      toast({
+        title: "Generating image",
+        description: "Please wait while we generate your image.",
+        isError: false,
+      });
       const res = await generate({
         prompt,
         negativePrompt: negativePrompt || undefined,
       });
-      console.log("Image generated successfully:", res);
+      toast({
+        title: "Image generated",
+        description: "Your image has been generated successfully.",
+        isError: false,
+      });
     } catch (error) {
       if (error instanceof Error) {
-        console.error("Error generating image:", error.message);
+        toast({
+          title: "Error",
+          description: error.message,
+          isError: true,
+        });
       }
+    } finally {
+      setIsFetching(false);
     }
   }
 
@@ -78,7 +97,8 @@ export function PromptFormContent() {
         <div className="sticky bottom-0 bg-white p-4 border-t">
           <Button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 hover:cursor-pointer"
+            disabled={!form.formState.isDirty || isFetching}
+            className="w-full h-15 font-bold text-lg bg-blue-600 hover:bg-blue-700 hover:cursor-pointer disabled:opacity-70 "
           >
             Generate
           </Button>

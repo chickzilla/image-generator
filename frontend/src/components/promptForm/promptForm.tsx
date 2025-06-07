@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "../ui/button";
 import { PromptFormContent } from "./promptFormContent";
-import { ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 export default function PromptForm() {
   const isDesktop = useMediaQuery("(min-width: 840px)");
@@ -31,14 +31,17 @@ export default function PromptForm() {
       <div className="fixed bottom-4 z-50">
         <DrawerTrigger asChild>
           <div className="w-screen items-center text-center flex flex-col justify-center border-t border-gray rounded-2xl gap-3 pt-2">
-            <ChevronUp className="text-black w-15 h-15" />
-            <div className="text-blue font-bold text-4xl">Generate</div>
+            <ChevronUp className="text-black w-10 h-10" />
+            <div className="text-blue font-bold text-3xl">Generate</div>
           </div>
         </DrawerTrigger>
       </div>
-      <DrawerContent className="bg-white p-4 h-screen max-h-max">
+      <DrawerContent className="bg-white px-8 h-screen max-h-max">
         <DrawerHeader>
           <DrawerTitle></DrawerTitle>
+          <DrawerClose asChild className="text-center w-full">
+            <ChevronDown className="text-black w-10 h-10 " />
+          </DrawerClose>
         </DrawerHeader>
         <PromptFormContent />
       </DrawerContent>
