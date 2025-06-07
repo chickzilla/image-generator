@@ -32,7 +32,7 @@ export default function PromptForm() {
         <DrawerTrigger asChild>
           <div className="w-screen items-center text-center flex flex-col justify-center border-t border-gray rounded-2xl gap-3 pt-2">
             <ChevronUp className="text-black w-10 h-10" />
-            <div className="text-blue font-bold text-3xl">Generate</div>
+            <div className="text-blue font-bold text-xl">Generate</div>
           </div>
         </DrawerTrigger>
       </div>

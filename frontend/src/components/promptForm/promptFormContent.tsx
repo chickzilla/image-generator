@@ -12,8 +12,15 @@ import { useState } from "react";
 import { toast } from "../ui/use-toast";
 
 const promptSchema = z.object({
-  prompt: z.string().min(1, { message: "Image Prompt is required" }),
-  negativePrompt: z.string().optional(),
+  prompt: z.string().min(1, { message: "Image Prompt is required" }).max(255, {
+    message: "Image Prompt must be less than 255 characters",
+  }),
+  negativePrompt: z
+    .string()
+    .max(255, {
+      message: "Negative Prompt must be less than 255 characters",
+    })
+    .optional(),
 });
 
 export function PromptFormContent() {
