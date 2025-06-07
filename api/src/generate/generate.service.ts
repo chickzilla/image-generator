@@ -11,7 +11,7 @@ import {
   GenerateResponseDTO,
   SpacelyAIGenerateResponseDTO,
   SpacelyAIPoolingResponseDTO,
-} from './dto/generate.dto';
+} from './dto';
 import axios from 'axios';
 import {
   imageStatus,
@@ -78,7 +78,6 @@ export class GenerateService {
       );
 
       const resultData = result.data as SpacelyAIPoolingResponseDTO;
-      console.log('Polling result:', resultData);
       const status = resultData.data?.status;
 
       if (status === imageStatus.SUCCESS) {

@@ -1,22 +1,15 @@
-import { imageStatus } from 'src/constant';
+import { IsOptional, IsString, MaxLength } from 'class-validator';
 
-export interface GenerateRequestDTO {
+export class GenerateRequestDTO {
+  @IsString()
+  @MaxLength(255)
   prompt: string;
+
+  @IsOptional()
+  @IsString()
   negativePrompt?: string;
 }
 
-export interface GenerateResponseDTO {
+export class GenerateResponseDTO {
   results: string[];
-}
-
-export interface SpacelyAIGenerateResponseDTO {
-  data: string;
-}
-
-export interface SpacelyAIPoolingResponseDTO {
-  data: {
-    status: imageStatus;
-    result: string[];
-    webhookUrl: string;
-  };
 }
