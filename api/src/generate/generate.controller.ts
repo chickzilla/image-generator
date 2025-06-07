@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   InternalServerErrorException,
   Post,
 } from '@nestjs/common';
@@ -15,6 +16,18 @@ export class GenerateController {
   async generate(@Body() payload: GenerateRequestDTO) {
     try {
       return await this.generateService.generate(payload);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
+  @Get('/history')
+  async getHistory() {
+    try {
+      return await this.generateService.history();
     } catch (error) {
       if (error instanceof Error) {
         throw error;
