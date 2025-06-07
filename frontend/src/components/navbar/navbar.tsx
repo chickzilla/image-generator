@@ -2,7 +2,7 @@ import { Sparkles } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <nav className="w-full border-b border-gray-200 bg-white px-6 py-3 shadow-sm">
+    <nav className="w-full border-b border-gray-200 bg-white px-6 py-3 shadow-sm h-[50px] z-50 top-0 left-0 absolute">
       <div className="flex items-center gap-2 text-lg font-semibold text-gray-800">
         <Sparkles className="h-6 w-6 text-blue" />
 
