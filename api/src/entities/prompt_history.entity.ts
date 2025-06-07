@@ -20,12 +20,6 @@ export class PromptHistory {
   })
   negativePrompt: string;
 
-  @Column({
-    type: 'enum',
-    enum: imageStatus,
-  })
-  status: imageStatus;
-
   @Column()
   RefId: string;
 
