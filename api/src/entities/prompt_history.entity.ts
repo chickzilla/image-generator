@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { imageStatus } from '../constant';
 
 @Entity('prompt_history')
 export class PromptHistory {
@@ -27,5 +26,5 @@ export class PromptHistory {
   results: string[];
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 }

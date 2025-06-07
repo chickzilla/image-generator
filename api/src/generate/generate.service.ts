@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import {
   GenerateRequestDTO,
   GenerateResponseDTO,
+  PromptHistoriesResponseDto,
   SpacelyAIGenerateResponseDTO,
   SpacelyAIPoolingResponseDTO,
 } from './dto';
@@ -54,7 +55,7 @@ export class GenerateService {
 
     const results = await this.pollForResult(refId);
 
-    await this.promptHistoryRepository.create({
+    await this.promptHistoryRepository.save({
       prompt,
       negativePrompt: negativePrompt || '',
       RefId: refId,
@@ -87,5 +88,17 @@ export class GenerateService {
     }
 
     throw new InternalServerErrorException('Polling timed out');
+  }
+
+  async history(): Promise<PromptHistoriesResponseDto> {
+    const promptHistories = await this.promptHistoryRepository.find({
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+
+    return {
+      items: promptHistories,
+    };
   }
 }
