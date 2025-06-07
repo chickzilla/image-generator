@@ -4,18 +4,11 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import { PromptFormItem } from "./promptFormItem";
+import generate from "@/services/generate";
+import { ca } from "zod/v4/locales";
 
 const promptSchema = z.object({
   prompt: z.string().min(1, { message: "Image Prompt is required" }),
@@ -31,8 +24,19 @@ export function PromptFormContent() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof promptSchema>) {
-    // TODO: Integrate
+  async function onSubmit(values: z.infer<typeof promptSchema>) {
+    try {
+      const { prompt, negativePrompt } = values;
+      const res = await generate({
+        prompt,
+        negativePrompt: negativePrompt || undefined,
+      });
+      console.log("Image generated successfully:", res);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error generating image:", error.message);
+      }
+    }
   }
 
   return (
