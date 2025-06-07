@@ -1,84 +1,47 @@
 "use client";
 
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useMediaQuery } from "@/hooks";
 import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form";
-import { PromptFormItem } from "./promptFormItem";
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerClose,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { Button } from "../ui/button";
+import { PromptFormContent } from "./promptFormContent";
+import { ChevronUp } from "lucide-react";
 
-const promptSchema = z.object({
-  prompt: z.string().min(1, { message: "Image Prompt is required" }),
-  negativePrompt: z.string().optional(),
-});
+export default function PromptForm() {
+  const isDesktop = useMediaQuery("(min-width: 840px)");
+  const [open, setOpen] = useState(true);
 
-export function PromptForm() {
-  const form = useForm<z.infer<typeof promptSchema>>({
-    resolver: zodResolver(promptSchema),
-    defaultValues: {
-      prompt: "",
-      negativePrompt: "",
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof promptSchema>) {
-    // TODO: Integrate
+  if (isDesktop) {
+    return (
+      <aside className="w-[320px] h-screen border-r bg-white px-4 py-6">
+        <PromptFormContent />
+      </aside>
+    );
   }
 
   return (
-    <aside className="w-[320px] h-screen border-r bg-white px-4 py-6">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-6"
-        >
-          <FormField
-            control={form.control}
-            name="prompt"
-            render={({ field }) => (
-              <PromptFormItem
-                number={1}
-                label="Image Prompt"
-                description="Describe the image you want to generate in the prompt field."
-                placeholder="e.g. futuristic city at night"
-                field={field}
-              />
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="negativePrompt"
-            render={({ field }) => (
-              <PromptFormItem
-                number={2}
-                label="Negative Prompt"
-                description="Describe what you want to exclude from the image."
-                placeholder="e.g. blurry, vintage"
-                field={field}
-                optional
-              />
-            )}
-          />
-
-          <Button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700  hover:cursor-pointer"
-          >
-            Generate
-          </Button>
-        </form>
-      </Form>
-    </aside>
+    <Drawer open={open} onOpenChange={setOpen}>
+      <div className="fixed bottom-4 z-50">
+        <DrawerTrigger asChild>
+          <div className="w-screen items-center text-center flex flex-col justify-center border-t border-gray rounded-2xl gap-3 pt-2">
+            <ChevronUp className="text-black w-15 h-15" />
+            <div className="text-blue font-bold text-4xl">Generate</div>
+          </div>
+        </DrawerTrigger>
+      </div>
+      <DrawerContent className="bg-white p-4 h-screen max-h-max">
+        <DrawerHeader>
+          <DrawerTitle></DrawerTitle>
+        </DrawerHeader>
+        <PromptFormContent />
+      </DrawerContent>
+    </Drawer>
   );
 }

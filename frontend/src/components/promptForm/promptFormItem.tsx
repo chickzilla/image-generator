@@ -26,26 +26,30 @@ export function PromptFormItem({
   optional = false,
 }: PromptFieldItemProps) {
   return (
-    <FormItem className="border border-gray p-8 rounded-xl">
+    <FormItem className="relative border border-gray p-8 rounded-xl">
+      {optional && (
+        <span className="absolute top-4 right-4 text-sm text-blue font-medium">
+          (optional)
+        </span>
+      )}
+
       <div className="flex items-center gap-2">
         <div className="w-6 h-6 rounded-full bg-blue text-white text-sm flex items-center justify-center font-bold">
           {number}
         </div>
-        <FormLabel className="text-black font-bold">
-          {label}
-          {optional && (
-            <span className="text-blue text-sm ml-1">(optional)</span>
-          )}
-        </FormLabel>
+        <FormLabel className="text-black font-bold">{label}</FormLabel>
       </div>
+
       <FormDescription className="text-gray">{description}</FormDescription>
+
       <FormControl>
         <Textarea
           placeholder={placeholder}
-          className="min-h-[100px] border border-gray"
+          className="min-h-[100px] border border-gray text-black"
           {...field}
         />
       </FormControl>
+
       <FormMessage className="text-red text-sm" />
     </FormItem>
   );

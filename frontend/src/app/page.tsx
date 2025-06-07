@@ -1,5 +1,5 @@
-import { PromptForm } from "@/components/promptForm/promptForm";
-import Image from "next/image";
+"use client";
+import PromptForm from "@/components/promptForm/promptForm";
 
 export default function Home() {
   return (
