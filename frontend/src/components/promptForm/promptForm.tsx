@@ -18,7 +18,7 @@ import {
 import { PromptFormItem } from "./promptFormItem";
 
 const promptSchema = z.object({
-  prompt: z.string().min(1, { message: "Prompt is required" }),
+  prompt: z.string().min(1, { message: "Image Prompt is required" }),
   negativePrompt: z.string().optional(),
 });
 
@@ -73,7 +73,7 @@ export function PromptForm() {
 
           <Button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700"
+            className="w-full bg-blue-600 hover:bg-blue-700  hover:cursor-pointer"
           >
             Generate
           </Button>

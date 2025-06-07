@@ -46,7 +46,7 @@ export function PromptFormItem({
           {...field}
         />
       </FormControl>
-      <FormMessage />
+      <FormMessage className="text-red text-sm" />
     </FormItem>
   );
 }
