@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "@/hooks";
 import {
   Drawer,
@@ -16,9 +16,19 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface PromptFormProps {
   onGenerating: (isGenerating: boolean) => void;
+  onGenerated?: (
+    prompt: string,
+    negativePrompt: string,
+    results: string[]
+  ) => void;
 }
 export default function PromptForm({
   onGenerating = (isGenerating: boolean) => {},
+  onGenerated = (
+    prompt: string,
+    negativePrompt: string,
+    results: string[]
+  ) => {},
 }: PromptFormProps) {
   const isDesktop = useMediaQuery("(min-width: 840px)");
   const [open, setOpen] = useState(true);
@@ -29,6 +39,13 @@ export default function PromptForm({
         <PromptFormContent
           onGenerating={(isGenerating: boolean) => {
             onGenerating(isGenerating);
+          }}
+          onGenerated={(
+            prompt: string,
+            negativePrompt: string,
+            results: string[]
+          ) => {
+            onGenerated(prompt, negativePrompt, results);
           }}
         />
       </aside>
@@ -55,6 +72,13 @@ export default function PromptForm({
         <PromptFormContent
           onGenerating={(isGenerating: boolean) => {
             onGenerating(isGenerating);
+          }}
+          onGenerated={(
+            prompt: string,
+            negativePrompt: string,
+            results: string[]
+          ) => {
+            onGenerated(prompt, negativePrompt, results);
           }}
         />
       </DrawerContent>

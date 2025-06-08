@@ -8,8 +8,12 @@ import NoImages from "./noImages";
 
 interface ImageAreaProps {
   isGenerating: boolean;
+  newGenerated: promptHistoryType | null;
 }
-export default function ImageArea({ isGenerating }: ImageAreaProps) {
+export default function ImageArea({
+  isGenerating,
+  newGenerated,
+}: ImageAreaProps) {
   const [historyItems, setHistoryItems] = useState<promptHistoryType[]>([]);
   useEffect(() => {
     const fetchHistory = async () => {
@@ -29,7 +33,13 @@ export default function ImageArea({ isGenerating }: ImageAreaProps) {
     fetchHistory();
   }, []);
 
-  if (historyItems?.length === 0) {
+  useEffect(() => {
+    if (!isGenerating && newGenerated) {
+      setHistoryItems((prev) => [...prev, newGenerated]);
+    }
+  }, [newGenerated]);
+
+  if (historyItems?.length === 0 && !isGenerating) {
     return <NoImages />;
   }
   return <ShowResult historyItems={historyItems} isGenerating={isGenerating} />;

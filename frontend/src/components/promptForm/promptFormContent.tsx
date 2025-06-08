@@ -13,6 +13,11 @@ import { toast } from "../ui/use-toast";
 
 interface PromptFormContentProps {
   onGenerating: (isGenerating: boolean) => void;
+  onGenerated?: (
+    prompt: string,
+    negativePrompt: string,
+    results: string[]
+  ) => void;
 }
 const promptSchema = z.object({
   prompt: z.string().min(1, { message: "Image Prompt is required" }).max(255, {
@@ -28,6 +33,11 @@ const promptSchema = z.object({
 
 export function PromptFormContent({
   onGenerating = (isGenerating: boolean) => {},
+  onGenerated = (
+    prompt: string,
+    negativePrompt: string,
+    results: string[]
+  ) => {},
 }: PromptFormContentProps) {
   const [isFetching, setIsFetching] = useState(false);
 
@@ -46,13 +56,14 @@ export function PromptFormContent({
       onGenerating(true);
       toast({
         title: "Generating image",
-        description: "Please wait while we generate your image.",
+        description: "Please wait while we generating your image.",
         isError: false,
       });
       const res = await generate({
         prompt,
         negativePrompt: negativePrompt || undefined,
       });
+      onGenerated(prompt, negativePrompt || "", res.results);
       toast({
         title: "Image generated",
         description: "Your image has been generated successfully.",
