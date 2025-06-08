@@ -11,6 +11,9 @@ import generate from "@/services/generate";
 import { useState } from "react";
 import { toast } from "../ui/use-toast";
 
+interface PromptFormContentProps {
+  onGenerating: (isGenerating: boolean) => void;
+}
 const promptSchema = z.object({
   prompt: z.string().min(1, { message: "Image Prompt is required" }).max(255, {
     message: "Image Prompt must be less than 255 characters",
@@ -23,7 +26,9 @@ const promptSchema = z.object({
     .optional(),
 });
 
-export function PromptFormContent() {
+export function PromptFormContent({
+  onGenerating = (isGenerating: boolean) => {},
+}: PromptFormContentProps) {
   const [isFetching, setIsFetching] = useState(false);
 
   const form = useForm<z.infer<typeof promptSchema>>({
@@ -38,6 +43,7 @@ export function PromptFormContent() {
     try {
       const { prompt, negativePrompt } = values;
       setIsFetching(true);
+      onGenerating(true);
       toast({
         title: "Generating image",
         description: "Please wait while we generate your image.",
@@ -61,6 +67,7 @@ export function PromptFormContent() {
         });
       }
     } finally {
+      onGenerating(false);
       setIsFetching(false);
     }
   }

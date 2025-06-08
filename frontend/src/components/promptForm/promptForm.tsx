@@ -14,14 +14,23 @@ import { Button } from "../ui/button";
 import { PromptFormContent } from "./promptFormContent";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-export default function PromptForm() {
+interface PromptFormProps {
+  onGenerating: (isGenerating: boolean) => void;
+}
+export default function PromptForm({
+  onGenerating = (isGenerating: boolean) => {},
+}: PromptFormProps) {
   const isDesktop = useMediaQuery("(min-width: 840px)");
   const [open, setOpen] = useState(true);
 
   if (isDesktop) {
     return (
       <aside className="w-[320px] h-screen border-r bg-white px-4 py-6">
-        <PromptFormContent />
+        <PromptFormContent
+          onGenerating={(isGenerating: boolean) => {
+            onGenerating(isGenerating);
+          }}
+        />
       </aside>
     );
   }
@@ -43,7 +52,11 @@ export default function PromptForm() {
             <ChevronDown className="text-black w-10 h-10 " />
           </DrawerClose>
         </DrawerHeader>
-        <PromptFormContent />
+        <PromptFormContent
+          onGenerating={(isGenerating: boolean) => {
+            onGenerating(isGenerating);
+          }}
+        />
       </DrawerContent>
     </Drawer>
   );

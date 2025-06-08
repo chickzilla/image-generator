@@ -6,7 +6,10 @@ import { toast } from "../ui/use-toast";
 import { promptHistory as promptHistoryType } from "@/types";
 import NoImages from "./noImages";
 
-export default function ImageArea() {
+interface ImageAreaProps {
+  isGenerating: boolean;
+}
+export default function ImageArea({ isGenerating }: ImageAreaProps) {
   const [historyItems, setHistoryItems] = useState<promptHistoryType[]>([]);
   useEffect(() => {
     const fetchHistory = async () => {
@@ -29,5 +32,5 @@ export default function ImageArea() {
   if (historyItems?.length === 0) {
     return <NoImages />;
   }
-  return <ShowResult historyItems={historyItems} />;
+  return <ShowResult historyItems={historyItems} isGenerating={isGenerating} />;
 }
