@@ -18,7 +18,7 @@ export function ResultCard({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="rounded-lg border bg-white shadow p-4 space-y-4 w-full overflow-y-auto">
+    <div className="rounded-lg border bg-white shadow p-4 space-y-4 w-full">
       <div className="flex items-start justify-between">
         {!expanded ? (
           <div className="text-base text-black w-[80%] truncate whitespace-nowrap">

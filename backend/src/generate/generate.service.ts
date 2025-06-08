@@ -93,7 +93,7 @@ export class GenerateService {
   async history(): Promise<PromptHistoriesResponseDto> {
     const promptHistories = await this.promptHistoryRepository.find({
       order: {
-        createdAt: 'DESC',
+        createdAt: 'ASC',
       },
     });
 

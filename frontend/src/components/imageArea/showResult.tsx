@@ -1,16 +1,32 @@
-import { Brush } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { promptHistory } from "@/types";
 import { ResultCard } from "./resultCard";
 
-export default function ShowResult() {
-  const mock =
-    "https://storage.googleapis.com/spacely-core/825ecdc4-b4fd-4a21-8847-1fb4af5a66aa/55d1815f-99c7-4de4-9e61-aa4cef1bc046-0.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=storage%40spacely-ai.iam.gserviceaccount.com%2F20250607%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250607T181834Z&X-Goog-Expires=10799&X-Goog-Signature=9e67d2fa7b3cb9847a5458b59b8f51bd1e8eeec7479716151a7ee701d98f0cdd76367d34f5e752789f8c23a72f56a1236192983cd42d20bab19433e1e05afdfed563caa0f8b9f02a686cd7f3bda0d63577cfb18ac2a83aced83014f303be4244b5d8e3ea921ad0417fd925c5bc05ef0440cfdc764f9c9d478348aa1879257f3f1f9796fd883426c71b16c486a38eb6768d78869c5e3eef0a624031f1058168bc52ec9de9aabfa45e644c371fa5d66f8130d821827d7e0b58d58a087f4b089aaea4c9a844feb4abfd389d9e4f88fe3c4a04d89bca4bc03afe73974121db88f42840c0a2935ccfe07f6ed476ad30bc1aa9b97a53514c7a1ae417cc242f68fe9328&X-Goog-SignedHeaders=host";
+interface ShowResultProps {
+  historyItems: promptHistory[];
+}
+
+export default function ShowResult({ historyItems }: ShowResultProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [historyItems]);
+
   return (
-    <div className="flex flex-col items-center justify-center p-8 overflow-y-scroll h-full pb-[120px]">
-      <ResultCard
-        prompt="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis"
-        negativePrompt="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis"
-        results={[mock, mock, mock, mock]}
-      />
+    <div className="flex flex-col gap-6 p-8 h-full pb-[120px]">
+      <div ref={containerRef} className="overflow-y-auto h-full space-y-10">
+        {historyItems?.map((item, index) => (
+          <ResultCard
+            key={index}
+            prompt={item.prompt}
+            negativePrompt={item.negativePrompt}
+            results={item.results}
+          />
+        ))}
+      </div>
     </div>
   );
 }
