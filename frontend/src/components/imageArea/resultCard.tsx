@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
+import { ImageDialog } from "./imageDialog";
 
 interface ResultCardProps {
   prompt: string;
@@ -51,17 +52,19 @@ export function ResultCard({
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {results.map((url, i) => (
-          <div
-            key={i}
-            className="aspect-square relative rounded overflow-hidden"
-          >
-            <Image
-              src={url}
-              alt={`Generated image ${i + 1}`}
-              fill
-              className="object-cover rounded"
-            />
-          </div>
+          <ImageDialog key={i} imageUrl={url}>
+            <div
+              key={i}
+              className="aspect-square relative rounded overflow-hidden"
+            >
+              <Image
+                src={url}
+                alt={`Generated image ${i + 1}`}
+                fill
+                className="object-cover rounded"
+              />
+            </div>
+          </ImageDialog>
         ))}
       </div>
     </div>
