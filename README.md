@@ -8,8 +8,9 @@ The [Figma](https://www.figma.com/design/Jhsx2VUe74r5coSyrgr7gL/Spacely-AI?node-
 
 ## Database
 
-The application uses a PostgreSQL database with a core table called `prompt_history`, which stores prompts, results, and related metadata.
 ![database](docs/image.png)
+
+The application uses a PostgreSQL database with a core table called `prompt_history`, which stores prompts, results, and related metadata.
 
 ## Set up
 
