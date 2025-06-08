@@ -26,7 +26,8 @@ export default function PromptForm({
   onGenerated = () => {},
 }: PromptFormProps) {
   const isDesktop = useMediaQuery("(min-width: 840px)");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [isGeneratingFormContent, setIsGeneratingFormContent] = useState(false);
 
   if (isDesktop) {
     return (
@@ -67,6 +68,10 @@ export default function PromptForm({
         <PromptFormContent
           onGenerating={(isGenerating: boolean) => {
             onGenerating(isGenerating);
+            setIsGeneratingFormContent(isGenerating);
+            if (isGenerating) {
+              setOpen(false);
+            }
           }}
           onGenerated={(
             prompt: string,
@@ -75,6 +80,7 @@ export default function PromptForm({
           ) => {
             onGenerated(prompt, negativePrompt, results);
           }}
+          isGeneratingFormContent={isGeneratingFormContent}
         />
       </DrawerContent>
     </Drawer>

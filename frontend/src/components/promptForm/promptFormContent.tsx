@@ -18,6 +18,7 @@ interface PromptFormContentProps {
     negativePrompt: string,
     results: string[]
   ) => void;
+  isGeneratingFormContent?: boolean;
 }
 const promptSchema = z.object({
   prompt: z.string().min(1, { message: "Image Prompt is required" }).max(255, {
@@ -34,6 +35,7 @@ const promptSchema = z.object({
 export function PromptFormContent({
   onGenerating = () => {},
   onGenerated = () => {},
+  isGeneratingFormContent = false,
 }: PromptFormContentProps) {
   const [isFetching, setIsFetching] = useState(false);
 
@@ -118,7 +120,9 @@ export function PromptFormContent({
         <div className="sticky bottom-0 bg-white p-4 border-t">
           <Button
             type="submit"
-            disabled={!form.formState.isDirty || isFetching}
+            disabled={
+              !form.formState.isDirty || isFetching || isGeneratingFormContent
+            }
             className="w-full h-15 font-bold text-lg bg-blue-600 hover:bg-blue-700 hover:cursor-pointer disabled:opacity-70 "
           >
             Generate
