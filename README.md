@@ -9,7 +9,7 @@ The [Figma](https://www.figma.com/design/Jhsx2VUe74r5coSyrgr7gL/Spacely-AI?node-
 ## Database
 
 The application uses a PostgreSQL database with a core table called `prompt_history`, which stores prompts, results, and related metadata.
-![database](image.png)
+![database](docs/image.png)
 
 ## Set up
 
@@ -28,9 +28,6 @@ cd image-generator
 cp ./frontend/.env.example ./frontend/.env
 cp ./backend/.env.example ./backend/.env
 ```
-
-After copying the .env files, don’t forget to manually add **AI_API_KEY** to **./backend/.env.**
-This key is required to communicate with the AI image generation service and is **not included in .env.example**
 
 ## Run locally with Docker
 
