@@ -1,6 +1,3 @@
-import { Brush } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-
 export default function FetchingImages() {
   return (
     <div className="flex flex-col items-center justify-center h-full">

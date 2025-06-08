@@ -21,7 +21,7 @@ export function ResultCard({
     <div className="rounded-lg border bg-white shadow p-4 space-y-4 w-full">
       <div className="flex items-start justify-between">
         {!expanded ? (
-          <div className="text-base text-black w-[80%] truncate whitespace-nowrap">
+          <div className="text-base font-bold text-black w-[80%] truncate whitespace-nowrap">
             {prompt}
           </div>
         ) : (

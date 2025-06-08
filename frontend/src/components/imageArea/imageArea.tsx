@@ -41,7 +41,7 @@ export default function ImageArea({
     if (!isGenerating && newGenerated) {
       setHistoryItems((prev) => [...prev, newGenerated]);
     }
-  }, [newGenerated]);
+  }, [newGenerated, isGenerating]);
 
   if (!isFetched) {
     return <FetchingImages />;

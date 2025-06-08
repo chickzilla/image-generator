@@ -32,12 +32,8 @@ const promptSchema = z.object({
 });
 
 export function PromptFormContent({
-  onGenerating = (isGenerating: boolean) => {},
-  onGenerated = (
-    prompt: string,
-    negativePrompt: string,
-    results: string[]
-  ) => {},
+  onGenerating = () => {},
+  onGenerated = () => {},
 }: PromptFormContentProps) {
   const [isFetching, setIsFetching] = useState(false);
 

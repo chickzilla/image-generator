@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMediaQuery } from "@/hooks";
 import {
   Drawer,
@@ -10,7 +10,6 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { Button } from "../ui/button";
 import { PromptFormContent } from "./promptFormContent";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
@@ -23,12 +22,8 @@ interface PromptFormProps {
   ) => void;
 }
 export default function PromptForm({
-  onGenerating = (isGenerating: boolean) => {},
-  onGenerated = (
-    prompt: string,
-    negativePrompt: string,
-    results: string[]
-  ) => {},
+  onGenerating = () => {},
+  onGenerated = () => {},
 }: PromptFormProps) {
   const isDesktop = useMediaQuery("(min-width: 840px)");
   const [open, setOpen] = useState(true);
